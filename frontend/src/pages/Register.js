@@ -9,30 +9,30 @@ const Register = ({ onLogin }) => {
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const response = await API.post('/users/register', {
-        name,
-        email,
-        password
-      });
+  try {
+    const { data } = await API.post('/users/register', {
+      name,
+      email,
+      password
+    });
 
-      onLogin(data.token);
-      localStorage.setItem('name', data.name);
-      localStorage.setItem('email', data.email);
-      navigate('/profile');
+    onLogin(data.token);
+    localStorage.setItem('name', data.name);
+    localStorage.setItem('email', data.email);
+    navigate('/profile');
 
-
-    } catch (err) {
-      console.log(err);
-      if (err.response?.data?.message) {
-        alert(err.response.data.message);
-      } else {
-        alert("Registration failed. Check backend.");
-      }
+  } catch (err) {
+    console.log(err);
+    if (err.response?.data?.message) {
+      alert(err.response.data.message);
+    } else {
+      alert("Registration failed. Check backend.");
     }
-  };
+  }
+};
+
 
   return (
     <div style={{ padding: "50px" }}>
